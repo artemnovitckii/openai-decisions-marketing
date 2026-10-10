@@ -1,37 +1,22 @@
 # Verification record
 
-Version 0.1.0, September 30, 2026. This is a local beta.
+OpenAI Decisions edition, October 11, 2026.
 
-## Actually checked
+## Checked locally
 
-- Dependency installation with the committed lockfile; npm audit reported zero vulnerabilities at installation.
-- JavaScript syntax checks.
-- Nine automated tests covering normalization, exact fingerprints, unknown dates, active/dated denominators, classification evidence boundaries, response validation, URL restrictions, no retry on an uncertain paid launch, Jev caching with a mock response, and explicit outline fallback.
-- Actual Tesseract.js English OCR on a generated PNG reading “NOTEBOOKS FOR YOUR NEXT IDEA / SHOP THE TWO PACK.” This proves the local OCR path works on clear text, not its accuracy on every ad.
-- Chromium checks of simultaneous demo progress, pause, pattern filtering, source dialog, desktop/portrait/mobile layouts and no horizontal overflow at 390 px.
-- No-key text import and classification failure with retained evidence.
-- Script-like source copy renders as text; a cross-origin write is rejected.
-- Verified the public image-pack command on five cached images with no paid calls and no duplicate files added.
-- Imported and compressed 2,136 distinct public creative image files locally (336 Meta images and 1,800 additional gallery images after exact-file deduplication). Multiple images can come from one ad.
-- A 20-second light-mode recording of the actual demo UI is included in `docs/demo.mp4`.
-- Reference / Light: 32 observed thumbnail crossings produced exactly 32 counter increments. Judgments, illustrative cost, brief counters, and graph arrivals follow the same scan events.
-- Verified changing pattern thumbnails/multiples, stat-card text bounds, pause stability, no browser errors, and smooth frame timing (about 9 ms at the 95th percentile on the development machine). These are local rendering checks, not Jev speed measurements.
+- JavaScript syntax and 13 automated tests.
+- Actual FFmpeg static-image resizing and four-frame video sampling, including frame timestamps.
+- Mocked Decisions request/response handling, refused labels, missing usage, byte-sensitive cache keys and no automatic retry of an uncertain request.
+- Persisted results, safe frame previews and export provenance.
+- Populated light-mode research demo, format/hook filters, linked creative inspector, sample findings and briefs, replay and pause.
+- The demo makes no paid provider calls and does not change the saved real batch.
 
-## Implemented, not verified with paid live calls
+## Implemented, not verified through paid live calls
 
-- Apify Actor launch, polling, dataset import and attaching an existing run.
-- Jev live classification and brief scoring. Request shape and response parsing follow the provider's documented API; tests use mocked responses.
-- Fireworks / Groq speech transcription.
-- Optional OpenAI-compatible brief writing.
-- An end-to-end paid run combining these providers.
+OpenAI Decisions classification and brief review; Apify collection; Fireworks/Groq speech; optional compatible brief writer. Passing local tests does not establish account access or paid end-to-end results. Start with five real images and inspect the outputs and provider billing.
 
-Do not interpret a configured key, passing test or successful app installation as a successful real provider run. Start with five imported ads; inspect the evidence and labels. Then try a small collection and check actual billing.
+## Boundaries
 
-## Known limits
+The included video is a rebranded version of the original illustrative animation, not a Decisions benchmark. Sample copy, ages, labels, groupings and scores are fictional even when reference artwork is public. Public images are not a verified Meta campaign dataset.
 
-- One saved local batch. Imports replace it; export first.
-- English-only OCR, four sampled frames per video, no automatic visual reasoning model.
-- Family grouping is exact evidence fingerprinting, not perceptual or semantic deduplication.
-- An active snapshot cannot measure survival probability or profitability.
-- Demo analysis is synthetic, even when using real public artwork. It is not a benchmark or marketing case study.
-- Jev cost display estimates only known returned token usage, excluding other stages and lost responses.
+Only sampled frames are inspected. Family grouping is exact evidence fingerprinting, not visual similarity. Age and active status do not establish continuous runtime, profitability or survival probability.

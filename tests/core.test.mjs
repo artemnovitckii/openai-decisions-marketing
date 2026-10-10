@@ -12,6 +12,7 @@ import {
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+process.env.ANALYSIS_PROVIDER = "jev";
 const now = "2026-09-29T00:00:00.000Z";
 test("Apify fields normalize without inventing unavailable metrics", () => {
   const a = normalize(

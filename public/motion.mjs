@@ -11,6 +11,9 @@ let portrait = params.get("format") === "portrait";
 let duration = [20, 40, 80].includes(Number(params.get("duration")))
   ? Number(params.get("duration"))
   : 20;
+let playbackSpeed = [1, 1.5, 2, 3].includes(Number(params.get("speed")))
+  ? Number(params.get("speed"))
+  : 1;
 let elapsed = 0,
   playing = false,
   ready = false,
@@ -210,7 +213,7 @@ function counter(n, labelText, x, y, w = 180) {
 function header() {
   rect(0, 0, W, H, bg);
   rect(28, 31, 12, 12, lime);
-  text("Jev / ad research", 52, 44, 22, ink, 650);
+  text("OpenAI / ad research", 52, 44, 22, ink, 650);
   text("SIMULATION", W - 205, 42, 11, lime, 500, true);
   text(
     `${elapsed.toFixed(1).padStart(4, "0")}s`,
@@ -665,6 +668,7 @@ function sync() {
   url.searchParams.set("variant", variant);
   url.searchParams.set("format", portrait ? "portrait" : "wide");
   url.searchParams.set("duration", duration);
+  url.searchParams.set("speed", playbackSpeed);
   url.searchParams.set(
     "clean",
     document.body.classList.contains("clean") ? "1" : "0",
@@ -674,6 +678,7 @@ function sync() {
   $(`[data-variant="${variant}"]`).classList.add("active");
   $("#format").value = portrait ? "portrait" : "wide";
   $("#duration").value = duration;
+  $("#speed").value = playbackSpeed;
   $("#seek").max = duration;
   $("#end").textContent =
     `${String(Math.floor(duration / 60)).padStart(2, "0")}:${String(duration % 60).padStart(2, "0")}`;
@@ -703,7 +708,7 @@ function ui() {
 let uiTime = 0;
 function frame(now) {
   if (playing && !document.hidden) {
-    elapsed = Math.min(duration, elapsed + Math.min((now - last) / 1000, 0.08));
+    elapsed = Math.min(duration, elapsed + Math.min((now - last) / 1000, 0.08) * playbackSpeed);
     draw();
     if (elapsed >= duration) setPlaying(false);
   }
@@ -728,6 +733,11 @@ $("#play").onclick = () => {
   setPlaying(!playing);
 };
 $("#restart").onclick = restart;
+$("#speed").onchange = (e) => {
+  playbackSpeed = Number(e.target.value);
+  last = performance.now();
+  sync();
+};
 $("#duration").onchange = (e) => {
   duration = Number(e.target.value);
   elapsed = 0;

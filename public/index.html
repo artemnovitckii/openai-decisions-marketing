@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Ad Pattern Lab · Jev for marketers</title>
+    <title>OpenAI Decisions for Marketing</title>
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <header>
       <a class="brand" href="/"
-        ><i></i> Ad Pattern Lab <span>/ powered by Jev</span></a
+        ><i></i> OpenAI Decisions <span>/ powered by OpenAI Decisions</span></a
       >
       <div class="top-status">
         <span class="dot"></span><span id="modeBadge">SIMULATED RUN</span
@@ -20,7 +20,7 @@
 </header>
     <div class="controls">
       <div class="modes" role="group" aria-label="Data mode">
-        <button data-mode="demo" class="active">01 Simulation</button
+        <button data-mode="demo" class="active">01 Demo results</button
         ><button data-mode="import">02 Import ads</button
         ><button data-mode="collect">03 Meta collection</button>
       </div>
@@ -33,17 +33,17 @@
             <option value="80">80 seconds</option>
           </select></label
         ><button id="restart" title="Restart (R)">↺</button
-        ><button id="play" class="primary">▶ Play simulation</button
+        ><button id="play" class="primary">↺ Replay demo run</button
         ><button id="record">Portrait</button
         ><button id="export">Export</button>
       </div>
     </div>
     <section class="intro">
       <div>
-        <p class="eyebrow">COMPETITOR CREATIVE → YOUR NEXT BRIEF</p>
+        <p class="eyebrow">META AD RESEARCH / OPENAI DECISIONS</p>
         <h1>
-          Find the pattern.<br class="mobile" />
-          Make your next ad.
+          See what stays live.<br />
+          <span>Find your next angle.</span>
         </h1>
       </div>
       <p id="context">
@@ -55,8 +55,7 @@
       <div id="importPanel">
         <h2>Bring your own evidence.</h2>
         <p>
-          Paste ad copy, import a JSON array, or upload images / videos. OCR
-          runs locally. Jev needs your key.
+          Paste ad copy, import a JSON array, or upload images / videos. OpenAI Decisions reads the actual creatives and their words. Add your OpenAI key.
         </p>
         <div class="formrow">
           <label
@@ -87,8 +86,7 @@
           </button>
         </div>
         <p class="hint">
-          Video needs FFmpeg. Add Fireworks or Groq for speech. Without visual
-          observations, visual format can remain unknown. Importing JSON or text
+          Image and video analysis needs FFmpeg. Add Fireworks or Groq for speech. Images and four sampled video frames are sent to OpenAI. Speech is optional; unsampled scenes remain unknown. Importing JSON or text
           replaces the current local batch; export it first if needed.
         </p>
       </div>
@@ -158,7 +156,7 @@
             placeholder="Your actual offer, or leave blank" /></label
         ><button id="briefs">Create up to 6 briefs</button>
         <p class="hint">
-          Without a configured writer, this creates editable outlines. Jev
+          Without a configured writer, this creates editable outlines. OpenAI Decisions
           review scores are rubric judgments, not predicted performance.
         </p>
       </details>
@@ -168,18 +166,26 @@
         <pre id="activity"></pre>
       </details>
     </div>
+    <div class="summary-strip" aria-label="Research summary">
+      <div><strong id="adsCount">0</strong><span id="adsCountLabel">sample ads</span></div>
+      <div><strong id="decisions">0</strong><span id="decisionsLabel">sample labels</span></div>
+      <div><strong id="familyCount">0</strong><span id="familyLabel">sample groups</span></div>
+      <div><strong id="cost">DEMO</strong><span id="costLabel">no provider charges</span></div>
+    </div>
+    <section class="filter-toolbar" aria-label="Filter creatives">
+      <div><span class="eyebrow">FIND YOUR PATTERN</span><p>See the examples behind an angle.</p></div>
+      <label>FORMAT<select id="formatFilter"><option value="">All formats</option></select></label>
+      <span class="filter-plus" aria-hidden="true">+</span>
+      <label>HOOK<select id="hookFilter"><option value="">All hooks</option></select></label>
+      <button id="resetFilters" class="quiet">Reset filters ↺</button>
+      <span id="filterCount" role="status"></span>
+    </section>
     <main class="dashboard">
       <section class="panel wall-panel">
         <div class="panel-title">
           <span>01</span>
-          <h2>Read the creative.</h2>
+          <h2>Thumbnail wall</h2>
           <em id="queue">READY TO SCAN</em>
-        </div>
-        <div class="metrics">
-          <div><strong id="adsCount">0</strong><span>ads classified</span></div>
-          <div>
-            <strong id="decisions">0</strong><span>typed decisions</span>
-          </div>
         </div>
         <div class="wall-viewport">
           <div id="wall" class="wall"></div>
@@ -187,23 +193,14 @@
         </div>
         <div class="wall-caption">
           <span id="currentLabel">Waiting for the first creative</span
-          ><span class="live-dot">●</span>
+          ><button id="nextCreatives" class="quiet" aria-label="Show next creative images">Next →</button>
         </div>
         <div class="progress"><i id="progress"></i></div>
       </section>
       <section class="panel map-panel">
         <div class="panel-title">
           <span>02</span>
-          <h2>Watch patterns emerge.</h2>
-        </div>
-        <div class="metrics">
-          <div>
-            <strong id="familyCount">0</strong><span>creative families</span>
-          </div>
-          <div>
-            <strong id="cost">DEMO</strong
-            ><span id="costLabel">no provider charges</span>
-          </div>
+          <h2>Creative map</h2>
         </div>
         <div class="map-caption">
           <span>OBSERVED AD IDS IN FAMILY ↑</span
@@ -234,27 +231,30 @@
         </div>
         <div id="patterns"></div>
       </section>
-      <section class="panel brief-panel">
+      <aside class="panel inspector-panel">
         <div class="panel-title">
           <span>03</span>
-          <h2>Make it your own.</h2>
-          <em id="briefCount">0 BRIEFS</em>
+          <h2>Inside the creative</h2>
         </div>
-        <div class="brief-intro">
-          <strong>Research into a shootable idea.</strong>
-          <p id="briefDescription">
-            Original demo concepts. Three explicit review criteria.
-          </p>
-        </div>
-        <div id="briefFeed"></div>
-      </section>
+        <div id="inspector"></div>
+      </aside>
     </main>
+    <section class="findings-section" aria-labelledby="findingsTitle">
+      <div class="section-heading"><div><p class="eyebrow" id="findingsNote">ILLUSTRATIVE REPORT</p><h2 id="findingsTitle">The patterns worth testing.</h2></div><p>Follow the numbers to the examples.<br />Turn the pattern into your own creative.</p></div>
+      <div id="findings" class="findings-grid"></div>
+      <p class="research-note">60+ day share measures age among dated active ads in this snapshot. It does not measure profitability or predict campaign results.</p>
+    </section>
+    <section class="brief-panel" aria-labelledby="briefsTitle">
+      <div class="section-heading"><div><p class="eyebrow">FROM PATTERN TO PRODUCTION</p><h2 id="briefsTitle">Your next creative starts here.</h2></div><span id="briefCount">0 BRIEFS</span></div>
+      <p id="briefDescription">Original demo concepts. Three explicit review criteria.</p>
+      <div id="briefFeed"></div>
+    </section>
     <footer>
       <span id="disclosure"
         >SIMULATION · Fictional brands, synthetic dates, labels and scores.
         AI-generated illustrative creatives.</span
       ><a
-        href="https://github.com/artemnovitckii/ad-pattern-lab"
+        href="https://github.com/artemnovitckii/openai-decisions-marketing"
         target="_blank"
         rel="noopener"
         >Get the system ↗</a

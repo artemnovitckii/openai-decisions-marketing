@@ -10,14 +10,15 @@ The server binds to 127.0.0.1. This is a local development app, not an authentic
 - **Apify:** receives selected public library/page URLs and the collection configuration.
 - **Media retrieval:** downloads from restricted Meta/Apify CDN hosts; signed URLs may contain source access parameters.
 - **Fireworks or Groq speech:** receives extracted audio when that stage is enabled.
-- **Jev:** receives ad copy, OCR, transcripts and supplied visual notes, or your brief and brand facts for review.
+- **OpenAI Decisions (default):** receives resized creative images or four sampled video frames as inline base64 data, copy, available transcripts and visual notes, or brief/brand facts for rubric review. It does not receive campaign age or performance metadata.
+- **Jev (optional legacy provider):** receives ad copy, OCR, transcripts and supplied visual notes, or your brief and brand facts for review.
 - **Optional writer:** receives ad copy, labels and brand facts through your configured provider.
 
 Provider retention and billing policies apply. The app does not guarantee how external providers retain submitted content.
 
 ## What stays in files
 
-Keys live in `.env`, never browser JavaScript. Runtime data, uploads, transcripts, OCR and classification caches live in `data/`. Both are Git-ignored. The latest batch is saved as `data/run.json`. Export before replacing it. Delete the data folder while the server is stopped to remove local batches and caches; this does not delete provider-side data.
+Keys live in `.env`, never browser JavaScript. Runtime data, uploads, extracted visual frames, transcripts, OCR and classification caches live in `data/`. Both are Git-ignored. The latest batch is saved as `data/run.json`. Export before replacing it. Delete the data folder while the server is stopped to remove local batches and caches; this does not delete provider-side data.
 
 Exports deliberately omit local file paths and signed media URLs, but include ad text, labels, original source links, generated briefs and your brand facts. Review exports before sharing. Do not include private customer information, credentials or material you cannot use.
 
